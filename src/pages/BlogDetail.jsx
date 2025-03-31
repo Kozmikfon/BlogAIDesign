@@ -7,15 +7,18 @@ const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://localhost:44387/api/blog/${id}`)
+    console.log("Detay sayfası için ID:", id);
+    axios.get(`https://localhost:43387/api/blog/${id}`)
       .then(res => setBlog(res.data))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error("Detay yüklenemedi:", err);
+      });
   }, [id]);
-
-  if (!blog) return <p>Yükleniyor...</p>;
+  
+  if (!blog) return <div className="container mt-5 text-danger">Yükleniyor ya da içerik bulunamadı...</div>;
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5">
       <h2>{blog.title}</h2>
       <p className="text-muted">{new Date(blog.createdAt).toLocaleString()}</p>
       <hr />
