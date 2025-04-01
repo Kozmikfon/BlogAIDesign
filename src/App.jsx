@@ -5,6 +5,12 @@ import BlogDetail from './pages/BlogDetail';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast'; // ✅ Bildirim bileşeni
+import Dashboard from './pages/admin/Dashboard';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminRoute from './routes/AdminRoute'; // ✅ yeni route
+
+
+
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,6 +35,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<BlogList showToast={showToast} />} />
         <Route path="/blog/:id" element={<BlogDetail showToast={showToast} />} />
+        <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        
       </Routes>
 
       <Footer />
