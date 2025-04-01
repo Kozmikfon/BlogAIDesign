@@ -40,3 +40,72 @@
 .read-the-docs {
   color: #888;
 }
+body {
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: 0.3s ease;
+}
+
+.btn-outline-primary {
+  border-radius: 20px;
+}
+
+
+.card {
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: #0d47a1;
+}
+
+.card-text {
+  color: #555;
+}
+
+.btn-outline-primary {
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 5px 15px;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: none;
+}
+
+body.dark-mode .card-footer {
+  background-color: #2a2a2a;
+  color: #bdbdbd;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .footer {
+  background-color: #212121 !important;
+}
+
+body.dark-mode .btn-outline-primary {
+  border-color: #90caf9;
+  color: #90caf9;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+  background-color: #90caf9;
+  color: black;
+}

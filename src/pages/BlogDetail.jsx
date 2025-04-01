@@ -23,11 +23,18 @@ const BlogDetail = () => {
 
   return (
     <div className="container mt-5">
-      <h2>{blog.title}</h2>
-      <p className="text-muted">{new Date(blog.createdAt).toLocaleString()}</p>
+    <div className="bg-white shadow p-4 rounded">
+      <h2 className="text-primary">{blog.title}</h2>
+      <p className="text-muted small mb-3">
+        Yayın Tarihi: {new Date(blog.createdAt).toLocaleString()}
+      </p>
       <hr />
-      <p>{blog.content}</p>
+      <p className="lead" style={{ whiteSpace: 'pre-line' }}>
+        {blog.content}
+      </p>
     </div>
+  </div>
+  
   );
 };
 
