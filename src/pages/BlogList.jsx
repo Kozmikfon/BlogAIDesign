@@ -3,6 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // ❤️ ikonlar için
 
+const tagColors = {
+  "AI": "primary",
+  "teknoloji": "info",
+  "gelecek": "success",
+  "robotik": "warning",
+  "Yapay Zeka": "dark"
+};
+
+
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [likes, setLikes] = useState({}); // { blogId: true/false }
@@ -24,7 +33,17 @@ const BlogList = () => {
         {blogs.map(blog => (
           <div className="col-md-6 col-lg-4 mb-4" key={blog.id}>
             <div className="card h-100 shadow-sm border-0">
-              <div className="card-body d-flex flex-column">
+            <div className="card-body d-flex flex-column">
+  <div className="mb-2">
+    {blog.tags?.split(',').map((tag, i) => (
+      <span
+        key={i}
+        className={`badge bg-${tagColors[tag.trim()] || 'secondary'} me-1`}
+      >
+        {tag.trim()}
+      </span>
+    ))}
+  </div>
                 <h5 className="card-title text-primary">{blog.title}</h5>
                 <p className="card-text text-secondary flex-grow-1">
                   {blog.content.substring(0, 120)}...
