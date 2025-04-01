@@ -32,44 +32,59 @@ const BlogList = () => {
       <div className="row">
         {blogs.map(blog => (
           <div className="col-md-6 col-lg-4 mb-4" key={blog.id}>
-            <div className="card h-100 shadow-sm border-0">
-            <div className="card-body d-flex flex-column">
-  <div className="mb-2">
-    {blog.tags?.split(',').map((tag, i) => (
-      <span
-        key={i}
-        className={`badge bg-${tagColors[tag.trim()] || 'secondary'} me-1`}
-      >
-        {tag.trim()}
-      </span>
-    ))}
-  </div>
-                <h5 className="card-title text-primary">{blog.title}</h5>
-                <p className="card-text text-secondary flex-grow-1">
-                  {blog.content.substring(0, 120)}...
-                </p>
+            
+            <div className="card h-100 shadow-sm border-0" style={{ borderRadius: '16px' }}>
+    
+    {/* 📷 Görsel */}
+    {blog.imageUrl && (
+      <img src={blog.imageUrl} className="card-img-top" alt={blog.title} style={{ height: '200px', objectFit: 'cover' }} />
+    )}
 
-                <div className="d-flex justify-content-between align-items-center">
-                  <Link to={`/blog/${blog.id}`} className="btn btn-outline-primary btn-sm">
-                    Detaya Git
-                  </Link>
-                  <button
-                    className="btn btn-link p-0"
-                    onClick={() => toggleLike(blog.id)}
-                    title="Beğen"
-                  >
-                    {likes[blog.id] ? (
-                      <FaHeart color="red" />
-                    ) : (
-                      <FaRegHeart color="gray" />
-                    )}
-                  </button>
-                </div>
-              </div>
-              <div className="card-footer text-muted small">
-                {new Date(blog.createdAt).toLocaleString()}
-              </div>
-            </div>
+    <div className="card-body d-flex flex-column">
+      
+      {/* 🏷️ Etiketler */}
+      <div className="mb-2">
+        {blog.tags?.split(',').map((tag, i) => (
+          <span
+            key={i}
+            className={`badge bg-${tagColors[tag.trim()] || 'secondary'} me-1`}
+          >
+            {tag.trim()}
+          </span>
+        ))}
+      </div>
+
+      {/* 🧠 Başlık */}
+      <h5 className="card-title text-primary">{blog.title}</h5>
+
+      {/* 🧾 Özet */}
+      <p className="card-text text-muted small flex-grow-1">
+        {blog.summary || blog.content.substring(0, 100)}...
+      </p>
+
+      {/* 🔗 Detay + ❤️ */}
+      <div className="d-flex justify-content-between align-items-center">
+        <Link to={`/blog/${blog.id}`} className="btn btn-outline-primary btn-sm">
+          Detaya Git
+        </Link>
+        <button
+          className="btn btn-link p-0"
+          onClick={() => toggleLike(blog.id)}
+          title="Beğen"
+        >
+          {likes[blog.id] ? (
+            <FaHeart color="red" />
+          ) : (
+            <FaRegHeart color="gray" />
+          )}
+        </button>
+      </div>
+    </div>
+
+    <div className="card-footer text-muted small">
+      {new Date(blog.createdAt).toLocaleString()}
+    </div>
+  </div>
           </div>
         ))}
       </div>
