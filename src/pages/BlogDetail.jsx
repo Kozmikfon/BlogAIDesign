@@ -7,13 +7,17 @@ const BlogDetail = () => {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    console.log("Detay sayfası için ID:", id);
-    axios.get(`https://localhost:43387/api/blog/${id}`)
-      .then(res => setBlog(res.data))
-      .catch(err => {
-        console.error("Detay yüklenemedi:", err);
-      });
-  }, [id]);
+  console.log("Detay sayfası için ID:", id);
+  axios.get(`https://localhost:44387/api/blog/${id}`)
+    .then(res => {
+      console.log("Gelen veri:", res.data);
+      setBlog(res.data);
+    })
+    .catch(err => {
+      console.error("Detay yüklenemedi:", err);
+    });
+}, [id]);
+
   
   if (!blog) return <div className="container mt-5 text-danger">Yükleniyor ya da içerik bulunamadı...</div>;
 
