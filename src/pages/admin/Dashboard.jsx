@@ -19,6 +19,19 @@ const Dashboard = () => {
   navigate('/admin/login');              // Login sayfasına yönlendir
 };
 
+// delete
+const handleDelete = async (id) => {
+    if (!window.confirm("Bu blog yazısını silmek istediğine emin misin?")) return;
+  
+    try {
+      await axios.delete(`https://localhost:44387/api/blog/${id}`);
+      setBlogs(prev => prev.filter(blog => blog.id !== id)); // frontend'de de kaldır
+    } catch (err) {
+      alert("Silme işlemi başarısız oldu!");
+      console.error(err);
+    }
+  };
+  
 
   return (
     <div className="container mt-4">
@@ -45,12 +58,18 @@ const Dashboard = () => {
               <td>{blog.title || <i className="text-muted">Başlık yok</i>}</td>
               <td>{new Date(blog.createdAt).toLocaleString()}</td>
               <td>
-                <button className="btn btn-sm btn-danger me-2" disabled>
-                  🗑️ Sil
+              <button
+                className="btn btn-sm btn-danger me-2"
+                onClick={() => handleDelete(blog.id)}>
+                🗑️ Sil
                 </button>
-                <button className="btn btn-sm btn-secondary" disabled>
+
+                <button
+                   className="btn btn-sm btn-secondary"
+                    onClick={() => navigate(`/admin/edit/${blog.id}`)}>
                   ✏️ Düzenle
                 </button>
+
               </td>
             </tr>
           ))}

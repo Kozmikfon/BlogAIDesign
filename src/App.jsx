@@ -8,7 +8,7 @@ import Toast from './components/Toast'; // ✅ Bildirim bileşeni
 import Dashboard from './pages/admin/Dashboard';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminRoute from './routes/AdminRoute'; // ✅ yeni route
-
+import AdminEdit from './pages/admin/AdminEdit';
 
 
 
@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/blog/:id" element={<BlogDetail showToast={showToast} />} />
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/edit/:id" element={<AdminRoute><AdminEdit /></AdminRoute>} />
         
       </Routes>
 
