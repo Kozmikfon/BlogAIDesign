@@ -30,6 +30,13 @@ const BlogDetail = () => {
     setComments(prev => [comment, ...prev]);
     setNewComment("");
   };
+  const formatUnsplashUrl = (url) => {
+    if (!url.includes('?')) {
+      return `${url}?w=800&h=400&fit=crop`;
+    }
+    return url;
+  };
+  
 
   if (loading) return <div className="text-center mt-5">Yükleniyor...</div>;
   if (!blog) return <div className="text-center mt-5 text-danger">Blog bulunamadı.</div>;
@@ -41,8 +48,17 @@ const BlogDetail = () => {
       <h2 className="mb-3">{blog.title}</h2>
 
       {blog.imageUrl && (
-        <img src={blog.imageUrl} alt="Görsel" className="img-fluid rounded mb-4" />
-      )}
+  <img
+    src={formatUnsplashUrl(blog.imageUrl)}
+    referrerPolicy="no-referrer"
+    className="card-img-top"
+    alt={blog.title}
+    style={{ height: '200px', objectFit: 'cover' }}
+  />
+)}
+
+
+
 
       <div className="mb-2 text-muted">{blog.tags}</div>
       <p>{blog.content}</p>

@@ -50,6 +50,14 @@ const BlogList = ({ showToast }) => {
     showToast(likes[id] ? "Beğeni geri alındı" : "Beğenildi ❤️");
   };
 
+  const formatUnsplashUrl = (url) => {
+    if (!url.includes('?')) {
+      return `${url}?w=800&h=400&fit=crop`;
+    }
+    return url;
+  };
+  
+
   const filteredBlogs = blogs.filter(blog =>
     blog.title?.toLowerCase().includes(search.toLowerCase()) ||
     blog.tags?.toLowerCase().includes(search.toLowerCase())
@@ -87,13 +95,19 @@ const BlogList = ({ showToast }) => {
   
                 {/* 📷 Görsel */}
                 {blog.imageUrl && (
-                  <img
-                    src={blog.imageUrl}
-                    className="card-img-top"
-                    alt={blog.title}
-                    style={{ height: '200px', objectFit: 'cover' }}
-                  />
-                )}
+  <img
+    src={blog.imageUrl}
+    alt={blog.title}
+    className="card-img-top"
+    referrerPolicy="no-referrer"
+    style={{ height: '200px', objectFit: 'cover' }}
+  />
+)}
+
+
+
+
+
   
                 <div className="card-body d-flex flex-column">
                   {/* 🏷️ Etiketler */}
