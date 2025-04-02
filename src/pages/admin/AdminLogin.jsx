@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (username === 'admin' && password === 'blog58*') {
-      localStorage.setItem('admin-auth', 'true');
-      navigate('/admin'); // ✅ Giriş başarılıysa yönlendir
-    } else {
-      alert('❌ Kullanıcı adı veya şifre hatalı!');
+    try {
+      const response = await axios.post('https://localhost:44387/api/auth/login', {
+        username,
+        password
+      });
+
+      const { token } = response.data;
+      localStorage.setItem('token', token); // ✅ JWT token kaydedildi
+      navigate('/admin');
+    } catch (err) {
+      console.error('Giriş başarısız:', err);
+      setError('❌ Kullanıcı adı veya şifre hatalı!');
     }
   };
 
@@ -42,6 +51,8 @@ const AdminLogin = () => {
             required
           />
         </div>
+
+        {error && <div className="alert alert-danger">{error}</div>}
 
         <button type="submit" className="btn btn-primary w-100">Giriş Yap</button>
       </form>

@@ -1,10 +1,14 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AdminRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('admin-auth') === 'true';
+  const token = localStorage.getItem('token');
 
-  return isAuthenticated ? children : <Navigate to="/admin/login" replace />;
+  // Token yoksa login sayfasına yönlendir
+  if (!token) {
+    return <Navigate to="/admin/login" />;
+  }
+
+  return children;
 };
 
 export default AdminRoute;
