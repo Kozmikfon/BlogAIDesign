@@ -9,7 +9,7 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminRoute from './routes/AdminRoute'; // ✅ yeni route
 import AdminEdit from './pages/admin/AdminEdit';
-
+import CommentManager from './pages/admin/CommentManager';
 
 
 const App = () => {
@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/edit/:id" element={<AdminRoute><AdminEdit /></AdminRoute>} />
-        
+        <Route path="/admin/comments" element={<AdminRoute><CommentManager /></AdminRoute>} />
       </Routes>
 
       <Footer />

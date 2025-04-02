@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 
 
 const Dashboard = () => {
@@ -36,12 +36,18 @@ const handleDelete = async (id) => {
   return (
     <div className="container mt-4">
 
-      <div className="d-flex justify-content-between align-items-center mb-4">
+<div className="d-flex justify-content-between align-items-center mb-4">
   <h3>📊 Admin Panel - Blog Listesi</h3>
-  <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
-    🚪 Çıkış Yap
-  </button>
+  <div>
+    <Link to="/admin/comments" className="btn btn-outline-info btn-sm me-2">
+      💬 Yorumlar
+    </Link>
+    <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
+      🚪 Çıkış Yap
+    </button>
+  </div>
 </div>
+
       <table className="table table-striped">
         <thead>
           <tr>
@@ -63,6 +69,8 @@ const handleDelete = async (id) => {
                 onClick={() => handleDelete(blog.id)}>
                 🗑️ Sil
                 </button>
+                
+
 
                 <button
                    className="btn btn-sm btn-secondary"
