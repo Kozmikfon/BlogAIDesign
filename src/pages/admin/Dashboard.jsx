@@ -9,7 +9,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get('https://localhost:44387/api/blog')
       .then(res => setBlogs(res.data))
-      .catch(err => console.error(err));
+      .catch(err => console.error("Blog verisi alınamadı,",err));
   }, []);
 
   const navigate = useNavigate();
@@ -47,6 +47,24 @@ const handleDelete = async (id) => {
     </button>
   </div>
 </div>
+<div className="row mb-4">
+  <div className="col-md-4">
+    <div className="bg-light p-3 rounded shadow-sm">
+      <h6 className="text-muted">📚 Toplam Blog</h6>
+      <h4 className="text-primary">{blogs.length}</h4>
+    </div>
+  </div>
+
+  <div className="col-md-4">
+    <div className="bg-light p-3 rounded shadow-sm">
+      <h6 className="text-muted">🕒 Son Blog Tarihi</h6>
+      <h5 className="text-dark">
+        {blogs.length > 0 ? new Date(blogs[0].createdAt).toLocaleString() : 'Yok'}
+      </h5>
+    </div>
+  </div>
+</div>
+
 
       <table className="table table-striped">
         <thead>
