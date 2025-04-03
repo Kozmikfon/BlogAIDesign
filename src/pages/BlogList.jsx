@@ -104,13 +104,6 @@ const BlogList = ({ showToast }) => {
 
 
 
-
-
-
-
-
-
-  
                 <div className="card-body d-flex flex-column">
                   {/* 🏷️ Etiketler */}
                   <div className="mb-2">
