@@ -93,16 +93,18 @@ const BlogList = ({ showToast }) => {
                 
                 )}
   
-                {/* 📷 Görsel */}
-                {blog.imageUrl && (
+  {blog.imageUrl && (
   <img
     src={blog.imageUrl}
-    alt={blog.title}
     className="card-img-top"
-    referrerPolicy="no-referrer"
+    alt={blog.title}
     style={{ height: '200px', objectFit: 'cover' }}
   />
 )}
+
+
+
+
 
 
 

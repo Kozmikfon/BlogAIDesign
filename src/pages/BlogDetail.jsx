@@ -49,13 +49,15 @@ const BlogDetail = () => {
 
       {blog.imageUrl && (
   <img
-    src={formatUnsplashUrl(blog.imageUrl)}
-    referrerPolicy="no-referrer"
+    src={blog.imageUrl}
     className="card-img-top"
     alt={blog.title}
     style={{ height: '200px', objectFit: 'cover' }}
   />
 )}
+
+
+
 
 
 
