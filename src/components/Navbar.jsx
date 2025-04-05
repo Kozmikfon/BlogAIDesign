@@ -7,7 +7,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => (
       ? 'linear-gradient(90deg, #212121, #424242)'
       : 'linear-gradient(90deg, #0d47a1, #1976d2)',
   }}>
-    <Link className="navbar-brand fw-bold text-white" to="/">🤖 AI Blog</Link>
+    <Link className="navbar-brand fw-bold text-white" to="/">🤖 Future</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span className="navbar-toggler-icon"></span>
     </button>
