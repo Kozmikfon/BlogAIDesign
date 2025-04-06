@@ -33,6 +33,7 @@ const App = () => {
       <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
 
       <Routes>
+      <Route path="/" element={<BlogList darkMode={darkMode} showToast={showToast} />} />
         <Route path="/" element={<BlogList showToast={showToast} />} />
         <Route path="/blog/:id" element={<BlogDetail showToast={showToast} />} />
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />

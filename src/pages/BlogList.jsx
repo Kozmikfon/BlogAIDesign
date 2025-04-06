@@ -11,15 +11,15 @@ const tagColors = {
   "yapay zeka": "dark"
 };
 
-const BlogList = ({ showToast }) => {
+const BlogList = ({ showToast, darkMode }) => {
   const [blogs, setBlogs] = useState([]);
   const [likes, setLikes] = useState({});
   const [search, setSearch] = useState("");
-  const [lastSeenId, setLastSeenId] = useState(null); // ✅ eklendi
+  const [lastSeenId, setLastSeenId] = useState(null);
 
   useEffect(() => {
-    fetchBlogs(); // İlk yüklemede bir kez çalışır
-    const interval = setInterval(() => fetchBlogs(true), 10000); // Her 10 sn'de bir
+    fetchBlogs();
+    const interval = setInterval(() => fetchBlogs(true), 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -27,17 +27,13 @@ const BlogList = ({ showToast }) => {
     try {
       const res = await axios.get('https://localhost:44387/api/blog');
       const newBlogs = res.data;
-
       setBlogs(newBlogs);
 
       if (newBlogs.length > 0) {
         const latestId = newBlogs[0].id;
-
         if (checkNew && lastSeenId !== null && latestId !== lastSeenId) {
           showToast("🧠 Yeni bir blog yapay zeka tarafından üretildi!");
         }
-
-        // İlk yükleme veya her güncellemede son ID’yi kaydet
         setLastSeenId(latestId);
       }
     } catch (err) {
@@ -50,59 +46,48 @@ const BlogList = ({ showToast }) => {
     showToast(likes[id] ? "Beğeni geri alındı" : "Beğenildi ❤️");
   };
 
-  const formatUnsplashUrl = (url) => {
-    if (!url.includes('?')) {
-      return `${url}?w=800&h=400&fit=crop`;
-    }
-    return url;
-  };
-  
-
   const filteredBlogs = blogs.filter(blog =>
     blog.title?.toLowerCase().includes(search.toLowerCase()) ||
     blog.tags?.toLowerCase().includes(search.toLowerCase())
   );
 
-
   return (
-    <div className="container mt-4">
-      <h2 className="mb-3">Yapay Zeka Blogları</h2>
-  
+    <div className={`container mt-4 ${darkMode ? 'text-light' : 'text-dark'}`}>
+      <h2 className={`mb-3 fw-bold ${darkMode ? 'text-light' : 'text-dark'}`}>🧠 Yapay Zeka Blogları</h2>
+
       {/* 🔍 Arama Kutusu */}
       <input
         type="text"
-        className="form-control mb-4"
+        className={`form-control mb-4 ${darkMode ? 'bg-dark text-light border-secondary' : ''}`}
         placeholder="Başlığa veya etikete göre ara..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-  
+
       <div className="row">
         {filteredBlogs.length === 0 ? (
           <div className="text-center text-muted">Hiçbir blog bulunamadı.</div>
         ) : (
           filteredBlogs.map(blog => (
             <div className="col-md-6 col-lg-4 mb-4" key={blog.id}>
-              <div className="card h-100 shadow-sm border-0 position-relative" style={{ borderRadius: '16px' }}>
+              <div className={`card h-100 shadow-sm border-0 position-relative ${darkMode ? 'bg-dark text-light' : ''}`} style={{ borderRadius: '16px' }}>
                 
-                {/* 🆕 En yeni blog için rozet */}
+                {/* 🆕 Rozet */}
                 {blog.id === filteredBlogs[0]?.id && (
-                  <span className="position-absolute top-0 start-0 m-2" style={{ fontWeight: '500' }}>
-                  🆕 
-                </span>
-                
+                  <span className="position-absolute top-0 start-0 m-2 fw-bold text-warning">
+                    🆕
+                  </span>
                 )}
-  
-  {blog.imageUrl && (
-  <img
-    src={blog.imageUrl}
-    className="card-img-top"
-    alt={blog.title}
-    style={{ height: '200px', objectFit: 'cover' }}
-  />
-)}
 
-
+                {/* Görsel */}
+                {blog.imageUrl && (
+                  <img
+                    src={blog.imageUrl}
+                    className="card-img-top"
+                    alt={blog.title}
+                    style={{ height: '200px', objectFit: 'cover' }}
+                  />
+                )}
 
                 <div className="card-body d-flex flex-column">
                   {/* 🏷️ Etiketler */}
@@ -113,18 +98,18 @@ const BlogList = ({ showToast }) => {
                       </span>
                     ))}
                   </div>
-  
-                  {/* 🧠 Başlık */}
-                  <h5 className="card-title text-primary">{blog.title}</h5>
-  
-                  {/* 🧾 Özet */}
-                  <p className="card-text text-muted small flex-grow-1">
+
+                  {/* Başlık */}
+                  <h5 className="card-title">{blog.title}</h5>
+
+                  {/* Özet */}
+                  <p className="card-text small flex-grow-1">
                     {blog.summary || blog.content.substring(0, 100)}...
                   </p>
-  
-                  {/* 🔗 Detay + ❤️ */}
+
+                  {/* Link + Beğeni */}
                   <div className="d-flex justify-content-between align-items-center">
-                    <Link to={`/blog/${blog.id}`} className="btn btn-outline-primary btn-sm">
+                    <Link to={`/blog/${blog.id}`} className={`btn btn-sm ${darkMode ? 'btn-outline-light' : 'btn-outline-primary'}`}>
                       Detaya Git
                     </Link>
                     <button
@@ -136,9 +121,9 @@ const BlogList = ({ showToast }) => {
                     </button>
                   </div>
                 </div>
-  
-                {/* 🕒 Oluşturulma Tarihi */}
-                <div className="card-footer text-muted small">
+
+                {/* Tarih */}
+                <div className={`card-footer small ${darkMode ? 'text-secondary' : 'text-muted'}`}>
                   {new Date(blog.createdAt).toLocaleString()}
                 </div>
               </div>
@@ -148,7 +133,6 @@ const BlogList = ({ showToast }) => {
       </div>
     </div>
   );
-  
 };
 
 export default BlogList;
