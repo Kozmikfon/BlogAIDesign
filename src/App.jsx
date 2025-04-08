@@ -37,7 +37,7 @@ const App = () => {
         <Route path="/" element={<BlogList showToast={showToast} />} />
         <Route path="/blog/:id" element={<BlogDetail showToast={showToast} />} />
         <Route path="/admin" element={<AdminRoute><Dashboard /></AdminRoute>} />
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/login" element={<AdminLogin/>} />
         <Route path="/admin/edit/:id" element={<AdminRoute><AdminEdit /></AdminRoute>} />
         <Route path="/admin/comments" element={<AdminRoute><CommentManager /></AdminRoute>} />
       </Routes>

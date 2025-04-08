@@ -11,25 +11,43 @@ const BlogDetail = () => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    axios.get(`https://localhost:44387/api/blog/${id}`)
-      .then(res => {
-        setBlog(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Detay yüklenemedi:", err);
-        setLoading(false);
-      });
+    fetchBlog();
+    fetchComments();
   }, [id]);
 
-  const handleAddComment = () => {
+  const fetchBlog = async () => {
+    try {
+      const res = await axios.get(`https://localhost:44387/api/blog/${id}`);
+      setBlog(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Detay yüklenemedi:", err);
+      setLoading(false);
+    }
+  };
+
+  const fetchComments = async () => {
+    try {
+      const res = await axios.get(`https://localhost:44387/api/comment/byblog/${id}`);
+      setComments(res.data);
+    } catch (err) {
+      console.error("Yorumlar alınamadı:", err);
+    }
+  };
+
+  const handleAddComment = async () => {
     if (newComment.trim() === "") return;
-    const comment = {
-      text: newComment,
-      date: new Date().toLocaleString()
-    };
-    setComments(prev => [comment, ...prev]);
-    setNewComment("");
+    try {
+      const comment = {
+        text: newComment,
+        blogId: parseInt(id),
+      };
+      await axios.post("https://localhost:44387/api/comment", comment);
+      setNewComment("");
+      fetchComments(); // yenile
+    } catch (err) {
+      console.error("Yorum eklenemedi:", err);
+    }
   };
 
   const formatUnsplashUrl = (url) => {
@@ -55,21 +73,20 @@ const BlogDetail = () => {
 
       {blog.imageUrl && (
         <img
-          src={blog.imageUrl}
+          src={formatUnsplashUrl(blog.imageUrl)}
           className="card-img-top mb-3"
           alt={blog.title}
-          style={{ height: '200px', objectFit: 'cover' }}
+          style={{ height: '200px', objectFit: 'cover', borderRadius: '8px' }}
         />
       )}
 
-      <div className="mb-2 text-muted">{blog.tags}</div>
-      <p>{blog.content}</p>
+      <div className="mb-2 text-muted small">{blog.tags}</div>
+      <p style={{ whiteSpace: 'pre-wrap' }}>{blog.content}</p>
 
       {/* 📤 Paylaşım Butonları */}
       <div className="mt-4">
         <h6>📤 Paylaş:</h6>
         <div className="d-flex gap-3">
-          {/* WhatsApp */}
           <a
             href={`https://api.whatsapp.com/send?text=${encodeURIComponent(blog.title + ' - ' + window.location.href)}`}
             target="_blank"
@@ -79,7 +96,6 @@ const BlogDetail = () => {
             <FaWhatsapp />
           </a>
 
-          {/* Twitter */}
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(window.location.href)}`}
             target="_blank"
@@ -89,22 +105,20 @@ const BlogDetail = () => {
             <FaTwitter />
           </a>
 
-          {/* Link Kopyala */}
           <button
             className="btn btn-secondary btn-sm"
             onClick={handleCopyLink}
           >
-            <FaLink /> Copy
+            <FaLink /> Kopyala
           </button>
         </div>
       </div>
 
-      <hr />
+      <hr className="my-4" />
 
-      {/* 💬 Yorum Alanı */}
-      <h5 className="mb-3 mt-4">💬 Yorumlar</h5>
-
-      <div className="mb-3">
+      {/* 💬 Yorumlar */}
+      <div className="comments-section mt-4">
+        <h5 className="mb-3">💬 Yorumlar</h5>
         <textarea
           className="form-control"
           rows="3"
@@ -112,22 +126,21 @@ const BlogDetail = () => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button className="btn btn-primary mt-2" onClick={handleAddComment}>
-          Gönder
-        </button>
-      </div>
+        <button className="btn btn-primary mt-2" onClick={handleAddComment}>Gönder</button>
 
-      {comments.length === 0 ? (
-        <div className="text-muted">Henüz yorum yok.</div>
-      ) : (
-        <ul className="list-group">
-          {comments.map((comment, i) => (
-            <li key={i} className="list-group-item">
-              <small className="text-muted">{comment.date}</small><br />
-              {comment.text}
-            </li>
-          ))}
-        </ul>)}
+        {comments.length === 0 ? (
+          <div className="text-muted mt-3">Henüz yorum yok.</div>
+        ) : (
+          <ul className="list-group mt-3">
+            {comments.map((comment, i) => (
+              <li key={i} className="list-group-item">
+                <small className="text-muted">{new Date(comment.createdAt).toLocaleString()}</small><br />
+                {comment.text}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
