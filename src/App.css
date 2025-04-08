@@ -121,3 +121,19 @@ body.dark-mode .btn-outline-primary:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
+.blinking-cursor {
+  font-weight: bold;
+  color: white;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+
+
+
+
+

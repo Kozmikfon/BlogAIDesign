@@ -72,12 +72,12 @@ const BlogList = ({ showToast, darkMode }) => {
 
       <div className="row">
       {loading ? (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
       <div className="spinner-border text-primary" role="status">
         <span className="visually-hidden">Yükleniyor...</span>
       </div>
     </div>
-  ) : filteredBlogs.length === 0 ? (
+   ) : filteredBlogs.length === 0 ? (
     <div className="text-center text-muted">Hiçbir blog bulunamadı.</div>
   ) : (
           filteredBlogs.map(blog => (
