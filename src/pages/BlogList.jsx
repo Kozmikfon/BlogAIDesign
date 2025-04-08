@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import Spinner from 'react-bootstrap/Spinner';
 
 const tagColors = {
   "ai": "primary",
@@ -16,6 +17,7 @@ const BlogList = ({ showToast, darkMode }) => {
   const [likes, setLikes] = useState({});
   const [search, setSearch] = useState("");
   const [lastSeenId, setLastSeenId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchBlogs();
@@ -25,10 +27,11 @@ const BlogList = ({ showToast, darkMode }) => {
 
   const fetchBlogs = async (checkNew = false) => {
     try {
+      setLoading(true);
       const res = await axios.get('https://localhost:44387/api/blog');
       const newBlogs = res.data;
       setBlogs(newBlogs);
-
+  
       if (newBlogs.length > 0) {
         const latestId = newBlogs[0].id;
         if (checkNew && lastSeenId !== null && latestId !== lastSeenId) {
@@ -38,8 +41,11 @@ const BlogList = ({ showToast, darkMode }) => {
       }
     } catch (err) {
       console.error("Blog verileri alınamadı:", err);
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   const toggleLike = (id) => {
     setLikes(prev => ({ ...prev, [id]: !prev[id] }));
@@ -65,9 +71,15 @@ const BlogList = ({ showToast, darkMode }) => {
       />
 
       <div className="row">
-        {filteredBlogs.length === 0 ? (
-          <div className="text-center text-muted">Hiçbir blog bulunamadı.</div>
-        ) : (
+      {loading ? (
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Yükleniyor...</span>
+      </div>
+    </div>
+  ) : filteredBlogs.length === 0 ? (
+    <div className="text-center text-muted">Hiçbir blog bulunamadı.</div>
+  ) : (
           filteredBlogs.map(blog => (
             <div className="col-md-6 col-lg-4 mb-4" key={blog.id}>
               <div className={`card h-100 shadow-sm border-0 position-relative ${darkMode ? 'bg-dark text-light' : ''}`} style={{ borderRadius: '16px' }}>

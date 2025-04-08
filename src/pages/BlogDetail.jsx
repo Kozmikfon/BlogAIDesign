@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaWhatsapp, FaTwitter, FaLink } from 'react-icons/fa';
+import Spinner from 'react-bootstrap/Spinner';
+
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -57,7 +59,13 @@ const BlogDetail = () => {
     alert("🔗 Link kopyalandı!");
   };
 
-  if (loading) return <div className="text-center mt-5">Yükleniyor...</div>;
+  if (loading) return (
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "200px" }}>
+      <Spinner animation="border" variant="primary" role="status">
+        <span className="visually-hidden">Yükleniyor...</span>
+      </Spinner>
+    </div>
+  );
   if (!blog) return <div className="text-center mt-5 text-danger">Blog bulunamadı.</div>;
 
   return (
