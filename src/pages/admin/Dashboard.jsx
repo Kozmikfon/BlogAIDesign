@@ -20,7 +20,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('admin-auth');
+    localStorage.removeItem('token');
     navigate('/admin/login');
   };
 

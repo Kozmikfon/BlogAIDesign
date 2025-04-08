@@ -11,7 +11,8 @@ const AdminEdit = () => {
     content: '',
     tags: '',
     imageUrl: '',
-    category: ''
+    category: '',
+    createdAt: ''
   });
 
   const [loading, setLoading] = useState(true);
