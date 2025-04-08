@@ -27,7 +27,7 @@ const BlogList = ({ showToast, darkMode }) => {
 
   const fetchBlogs = async (checkNew = false) => {
     try {
-      setLoading(true);
+      if (!checkNew) setLoading(true); // sadece ilk yüklemede göster
       const res = await axios.get('https://localhost:44387/api/blog');
       const newBlogs = res.data;
       setBlogs(newBlogs);

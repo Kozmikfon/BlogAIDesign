@@ -11,7 +11,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     for (let i = 0; i < fullText.length; i++) {
       const timeoutId = setTimeout(() => {
         setTypedText(prev => prev + fullText[i]);
-      }, i * 150); // Her harfi 150ms aralıkla yaz
+      }, i * 250); // Her harfi 150ms aralıkla yaz
       timeoutIds.push(timeoutId);
     }
 

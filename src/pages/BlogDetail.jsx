@@ -147,37 +147,61 @@ const BlogDetail = () => {
             </button>
           </div>
         </div>
-
         <hr />
 
         {/* 💬 Yorumlar */}
-        <h5 className="mb-3 mt-4">💬 Yorumlar</h5>
+        <h5 className="mb-3">💬 Yorumlar</h5>
 
-        <div className="mb-3">
-          <textarea
-            className="form-control"
-            rows="3"
-            placeholder="Yorumunuzu yazın..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button className="btn btn-primary mt-2" onClick={handleAddComment}>
-            Gönder
-          </button>
+  <div className="mb-3">
+    <textarea
+      className="form-control"
+      rows="3"
+      placeholder="Yorumunuzu yazın..."
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+    />
+    <button className="btn btn-primary mt-2" onClick={handleAddComment}>
+      Gönder
+    </button>
+  </div>
+
+  {comments.length === 0 ? (
+    <div className="text-muted">Henüz yorum yok.</div>
+  ) : (
+    <div className="d-flex flex-column gap-3">
+      {comments.map((comment, i) => (
+        <div key={i} className="card shadow-sm p-3" style={{ borderRadius: '12px' }}>
+          <div className="d-flex align-items-start">
+            {/* Avatar */}
+            <div
+              className="me-3"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem'
+              }}
+            >
+              👤
+            </div>
+            {/* İçerik */}
+            <div>
+              <div className="text-muted small">
+                {new Date(comment.createdAt).toLocaleString()}
+              </div>
+              <div>{comment.text}</div>
+            </div>
+          </div>
         </div>
-
-        {comments.length === 0 ? (
-          <div className="text-muted">Henüz yorum yok.</div>
-        ) : (
-          <ul className="list-group">
-            {comments.map((comment, i) => (
-              <li key={i} className="list-group-item">
-                <small className="text-muted">{new Date(comment.createdAt).toLocaleString()}</small><br />
-                {comment.text}
-              </li>
-            ))}
-          </ul>
-        )}
+      ))}
+    </div>
+  )}
       </div>
     </>
   );
