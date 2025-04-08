@@ -11,40 +11,35 @@ const BlogDetail = () => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    fetchBlog();
-    fetchComments();
+    axios.get(`https://localhost:44387/api/blog/${id}`)
+      .then(res => {
+        setBlog(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Detay yüklenemedi:", err);
+        setLoading(false);
+      });
+
+    axios.get(`https://localhost:44387/api/comment/byblog/${id}`)
+      .then(res => setComments(res.data))
+      .catch(err => console.error("Yorumlar çekilemedi:", err));
   }, [id]);
-
-  const fetchBlog = async () => {
-    try {
-      const res = await axios.get(`https://localhost:44387/api/blog/${id}`);
-      setBlog(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.error("Detay yüklenemedi:", err);
-      setLoading(false);
-    }
-  };
-
-  const fetchComments = async () => {
-    try {
-      const res = await axios.get(`https://localhost:44387/api/comment/byblog/${id}`);
-      setComments(res.data);
-    } catch (err) {
-      console.error("Yorumlar alınamadı:", err);
-    }
-  };
 
   const handleAddComment = async () => {
     if (newComment.trim() === "") return;
+
     try {
-      const comment = {
-        text: newComment,
-        blogId: parseInt(id),
-      };
-      await axios.post("https://localhost:44387/api/comment", comment);
+      await axios.post('https://localhost:44387/api/comment', {
+        blogId: blog.id,
+        text: newComment
+      });
+
       setNewComment("");
-      fetchComments(); // yenile
+
+      // Yorumları tekrar çek
+      const res = await axios.get(`https://localhost:44387/api/comment/byblog/${blog.id}`);
+      setComments(res.data);
     } catch (err) {
       console.error("Yorum eklenemedi:", err);
     }
@@ -73,15 +68,15 @@ const BlogDetail = () => {
 
       {blog.imageUrl && (
         <img
-          src={formatUnsplashUrl(blog.imageUrl)}
+          src={blog.imageUrl}
           className="card-img-top mb-3"
           alt={blog.title}
-          style={{ height: '200px', objectFit: 'cover', borderRadius: '8px' }}
+          style={{ height: '200px', objectFit: 'cover' }}
         />
       )}
 
-      <div className="mb-2 text-muted small">{blog.tags}</div>
-      <p style={{ whiteSpace: 'pre-wrap' }}>{blog.content}</p>
+      <div className="mb-2 text-muted">{blog.tags}</div>
+      <p>{blog.content}</p>
 
       {/* 📤 Paylaşım Butonları */}
       <div className="mt-4">
@@ -105,20 +100,18 @@ const BlogDetail = () => {
             <FaTwitter />
           </a>
 
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={handleCopyLink}
-          >
+          <button className="btn btn-secondary btn-sm" onClick={handleCopyLink}>
             <FaLink /> Kopyala
           </button>
         </div>
       </div>
 
-      <hr className="my-4" />
+      <hr />
 
-      {/* 💬 Yorumlar */}
-      <div className="comments-section mt-4">
-        <h5 className="mb-3">💬 Yorumlar</h5>
+      {/* 💬 Yorum Alanı */}
+      <h5 className="mb-3 mt-4">💬 Yorumlar</h5>
+
+      <div className="mb-3">
         <textarea
           className="form-control"
           rows="3"
@@ -126,21 +119,23 @@ const BlogDetail = () => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button className="btn btn-primary mt-2" onClick={handleAddComment}>Gönder</button>
-
-        {comments.length === 0 ? (
-          <div className="text-muted mt-3">Henüz yorum yok.</div>
-        ) : (
-          <ul className="list-group mt-3">
-            {comments.map((comment, i) => (
-              <li key={i} className="list-group-item">
-                <small className="text-muted">{new Date(comment.createdAt).toLocaleString()}</small><br />
-                {comment.text}
-              </li>
-            ))}
-          </ul>
-        )}
+        <button className="btn btn-primary mt-2" onClick={handleAddComment}>
+          Gönder
+        </button>
       </div>
+
+      {comments.length === 0 ? (
+        <div className="text-muted">Henüz yorum yok.</div>
+      ) : (
+        <ul className="list-group">
+          {comments.map((comment, i) => (
+            <li key={i} className="list-group-item">
+              <small className="text-muted">{new Date(comment.createdAt).toLocaleString()}</small><br />
+              {comment.text}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
