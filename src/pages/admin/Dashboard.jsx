@@ -96,12 +96,12 @@ const Dashboard = () => {
                     <button
                       className="btn btn-sm btn-secondary"
                       onClick={() => navigate(`/admin/edit/${blog.id}`)}>
-                      ✏️
+                      ✏️ Düzenle
                     </button>
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => handleDelete(blog.id)}>
-                      🗑️
+                      🗑️ Sil
                     </button>
                   </div>
                 </td>
