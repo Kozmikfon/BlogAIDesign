@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaWhatsapp, FaTwitter, FaLink } from 'react-icons/fa';
 import Spinner from 'react-bootstrap/Spinner';
+import { FaXTwitter } from 'react-icons/fa6'; // Twitter yerine X logosu
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -127,30 +128,27 @@ const BlogDetail = () => {
 </section>
 
         {/* 📤 Paylaşım Butonları */}
-        <div className="mt-4">
-          <h6>📤 Paylaş:</h6>
-          <div className="d-flex gap-3">
-            <a
-              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(blog.title + ' - ' + window.location.href)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-success btn-sm"
-            >
-              <FaWhatsapp />
-            </a>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(window.location.href)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-info btn-sm text-white"
-            >
-              <FaTwitter />
-            </a>
-            <button className="btn btn-secondary btn-sm" onClick={handleCopyLink}>
-              <FaLink /> Kopyala
-            </button>
-          </div>
-        </div>
+        <div className="d-flex gap-3">
+  <a
+    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(blog.title + ' - ' + window.location.href)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn btn-success btn-sm"
+  >
+    <FaWhatsapp />
+  </a>
+  <a
+    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(window.location.href)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="btn btn-dark btn-sm text-white" // X platformuna uygun siyah tema
+  >
+    <FaXTwitter /> {/* Yeni X logosu */}
+  </a>
+  <button className="btn btn-secondary btn-sm" onClick={handleCopyLink}>
+    <FaLink /> Kopyala
+  </button>
+</div>
         <hr />
 
         {/* 💬 Yorumlar */}
