@@ -11,11 +11,11 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     for (let i = 0; i < fullText.length; i++) {
       const timeoutId = setTimeout(() => {
         setTypedText(prev => prev + fullText[i]);
-      }, i * 250); // Her harfi 150ms aralıkla yaz
+      }, i * 250); 
       timeoutIds.push(timeoutId);
     }
 
-    // Temizlik
+    
     return () => {
       timeoutIds.forEach(id => clearTimeout(id));
     };
@@ -33,7 +33,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     >
       <Link className="navbar-brand fw-bold text-white" to="/" style={{ fontFamily: 'monospace' }}>
         {typedText}
-        <span className="blinking-cursor">|</span>
+        
       </Link>
 
       <button
