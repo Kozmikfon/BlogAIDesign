@@ -16,7 +16,7 @@ const BlogDetail = () => {
   const readingTime = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
 
   useEffect(() => {
-    axios.get(`https://localhost:44387/api/blog/${id}`)
+    axios.get(`https://localhost:44387/api/Blog/${id}`)
       .then(res => {
         setBlog(res.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const BlogDetail = () => {
         setLoading(false);
       });
 
-    axios.get(`https://localhost:44387/api/comment/byblog/${id}`)
+    axios.get(`https://localhost:44387/api/Comment/byblog/${id}`)
       .then(res => setComments(res.data))
       .catch(err => console.error("Yorumlar çekilemedi:", err));
 
@@ -48,7 +48,7 @@ const BlogDetail = () => {
     if (newComment.trim() === "") return;
 
     try {
-      await axios.post('https://localhost:44387/api/comment', {
+      await axios.post('https://localhost:44387/api/Comment', {
         blogId: blog.id,
         text: newComment
       });
@@ -86,25 +86,29 @@ const BlogDetail = () => {
     top: 0,
     left: 0,
     height: "5px",
-    backgroundColor: "#ff9800", // 🍊 turuncu ton
-    width: "0%",                // JS ile scroll oldukça değişiyor
+    backgroundColor: "#ff9800", 
+    width: "0%",                
     zIndex: 9999,
     transition: "width 0.2s ease-out"
   }}
 ></div>
 
       <div className="container mt-4">
-        <Link to="/" className="btn btn-sm btn-outline-secondary mb-3">← Geri</Link>
+        
 
         <h2 className="mb-3">{blog.title}</h2>
 
         {blog.imageUrl && (
-          <img
-            src={blog.imageUrl}
-            className="card-img-top mb-3"
-            alt={blog.title}
-            style={{ height: '200px', objectFit: 'cover' }}
-          />
+         <img
+         src={blog.imageUrl}
+         className="card-img-top mb-3"
+         alt={blog.title}
+         style={{
+           width: '80%',
+           height: '500px',
+           objectFit: 'cover'
+         }}
+       />
         )}
 
         <p className="text-secondary small mb-3" style={{ fontStyle: 'italic' }}>
