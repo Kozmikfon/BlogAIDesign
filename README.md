@@ -1,12 +1,31 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🤖 AI Blog Sistemi
 
-Currently, two official plugins are available:
+Yapay zeka destekli otomatik blog içerik üretimi ve kullanıcı etkileşim sistemi. Bu projede React frontend, ASP.NET Core 8 backend ve PostgreSQL veritabanı kullanılmıştır. Blog içerikleri GPT-3.5 tarafından otomatik üretilmekte, kullanıcılar yorum yapabilmekte ve içerikleri beğenebilmektedir.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Özellikler
 
-## Expanding the ESLint configuration
+- 🧠 **AI Destekli Blog Üretimi**
+  - Her gün saat 00:00 ve 02:00'de otomatik içerik üretimi (Hangfire ile zamanlanmış görevler)
+- 📚 **Blog Listeleme ve Detay Sayfası**
+  - Kategori, etiket ve görsellerle zenginleştirilmiş içerikler
+- 💬 **Yorum Sistemi**
+  - API üzerinden yorum ekleme, silme, listeleme
+  - Admin panelden yorum yönetimi
+- 👨‍💼 **Admin Panel**
+  - Blog düzenleme, silme
+  - Yorumları yönetme
+- 🌙 **Dark Mode Desteği**
+- 📱 **Responsive Tasarım**
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Teknolojiler
+
+- **Frontend:** React, Bootstrap, Axios, React Router
+- **Backend:** ASP.NET Core 8, Entity Framework Core, Hangfire
+- **Veritabanı:** PostgreSQL
+- **AI:** OpenAI GPT-3.5 API
+
+---
+
+Eğer bu yapıyı kendi projen için özelleştirmek istersen, hangi alanları daha detaylı istiyorsan hemen düzenleyebilirim. Görsel eklemek veya Türkçe/İngilizce ayrı sürüm istersen de haber ver 🌟
