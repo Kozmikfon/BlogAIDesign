@@ -119,13 +119,14 @@ const BlogDetail = () => {
         <div className="mb-2 text-muted">{blog.tags}</div>
         {/* 🔽 Uzun içerik ve görsel ayrım */}
         <section className="blog-content" style={{ lineHeight: '1.8', fontSize: '1.05rem' }}>
-  
-        <p>{blog.content}</p>
-        <hr className="my-4" />
-  
-  
-  
+  {blog.content?.split('\n\n').map((section, idx) => (
+    <p key={idx} style={{ marginBottom: '1.2rem', textAlign: 'justify' }}>
+      {section}
+    </p>
+  ))}
+  <hr className="my-4" />
 </section>
+
 
         {/* 📤 Paylaşım Butonları */}
         <div className="d-flex gap-3">
